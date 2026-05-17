@@ -1,0 +1,22 @@
+version: 1
+profiles:
+  - id: default.execute
+    summary: "平衡执行模式。"
+    reasoning_effort: medium
+    validation_depth: standard
+    tool_budget: moderate
+    approval_behavior: request_only_when_blocked
+
+  - id: fast.inspect
+    summary: "快速阅读和定位。"
+    reasoning_effort: low
+    validation_depth: light
+    tool_budget: low
+    approval_behavior: avoid
+
+  - id: safe.change
+    summary: "偏稳健的生产改动模式。"
+    reasoning_effort: high
+    validation_depth: deep
+    tool_budget: moderate
+    approval_behavior: conservative

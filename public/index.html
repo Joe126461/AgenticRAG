@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang='zh-CN'>
+  <head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Learning Agent</title>
+    <link rel='stylesheet' href='/styles.css'>
+  </head>
+  <body>
+    <main class='page'>
+      <section class='hero'>
+        <p class='eyebrow'>vLLM + MCP + Skills</p>
+        <h1>Learning Agent Playground</h1>
+        <p class='subtitle'>
+          一个最小可运行的学习型 agent。Host 负责选 skill、发现 MCP，再把工具 schema 暴露给模型。
+        </p>
+      </section>
+
+      <section class='panel'>
+        <form id='question-form' class='questionForm'>
+          <label class='fieldLabel' for='question'>输入问题</label>
+          <textarea
+            id='question'
+            name='question'
+            rows='6'
+            placeholder='例如：为什么这个项目需要 skill registry？或者：帮我查一下 vLLM 最近的 Docker 部署建议'
+          ></textarea>
+          <div class='actions'>
+            <button id='submit-button' type='submit'>Ask</button>
+            <span id='status' class='status'>Ready</span>
+          </div>
+        </form>
+      </section>
+
+      <section class='grid'>
+        <article class='panel'>
+          <h2>Answer</h2>
+          <pre id='answer' class='content'>等待提问...</pre>
+        </article>
+
+        <article class='panel'>
+          <h2>Execution Trace</h2>
+          <pre id='trace' class='content'>还没有执行记录。</pre>
+        </article>
+      </section>
+
+      <section class='grid'>
+        <article class='panel'>
+          <h2>Registered Skills</h2>
+          <ul id='skills' class='list'></ul>
+        </article>
+
+        <article class='panel'>
+          <h2>Registered MCP Servers</h2>
+          <ul id='mcp-servers' class='list'></ul>
+        </article>
+      </section>
+    </main>
+
+    <script type='module' src='/app.js'></script>
+  </body>
+</html>

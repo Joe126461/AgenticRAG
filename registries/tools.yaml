@@ -1,0 +1,71 @@
+version: 1
+tool_presets:
+  shell:
+    enabled: true
+    preferred_shell: bash
+    fallback_shells: [sh, powershell]
+    use_cases:
+      - read_files
+      - list_files
+      - search_code
+      - run_tests
+      - run_build
+      - inspect_env
+    preferred_commands:
+      find_files: "rg --files"
+      search_text: "rg"
+      list_dir: "ls -la"
+      read_chunk: "sed -n '1,200p'"
+      git_status: "git status --short"
+    fallback_commands:
+      find_files: "find . -type f"
+      list_dir_windows: "Get-ChildItem -Force"
+      search_text_windows: "Select-String"
+    safety:
+      deny_by_default:
+        - destructive_fs
+        - privilege_escalation
+
+  sandbox:
+    enabled: true
+    mode: workspace-write
+    escalation_required_for:
+      - network_install
+      - out_of_workspace_write
+      - gui_launch
+      - destructive_actions
+      - system_service_control
+    strategy:
+      - inspect_locally_first
+      - request_approval_only_when_blocked
+
+  listing:
+    enabled: true
+    purpose:
+      - enumerate_workspace
+      - locate_extension_points
+      - reduce_edit_scope
+
+  patch_editing:
+    enabled: true
+    preferred_method: patch
+    constraints:
+      - preserve_unrelated_content
+      - small_auditable_diffs
+      - ascii_by_default
+
+  mcp_discovery:
+    enabled: true
+    purpose:
+      - list_servers
+      - inspect_resources
+      - inspect_resource_templates
+      - inspect_prompts_if_supported
+      - prefer_structured_context_over_guessing
+
+  skill_discovery:
+    enabled: true
+    purpose:
+      - discover_installed_skills
+      - read_only_needed_skill_file
+      - apply_progressive_disclosure

@@ -1,0 +1,48 @@
+services:
+  vllm:
+    image: vllm/vllm-openai:latest
+    container_name: learning-agent-vllm
+    command:
+      - --model
+      - Qwen/Qwen2.5-7B-Instruct-AWQ
+      - --served-model-name
+      - Qwen/Qwen2.5-7B-Instruct-AWQ
+      - --quantization
+      - awq
+      - --gpu-memory-utilization
+      - '0.85'
+      - --max-model-len
+      - '8192'
+      - --host
+      - 0.0.0.0
+      - --port
+      - '8000'
+      - --enable-auto-tool-choice
+      - --tool-call-parser
+      - hermes
+    environment:
+      HUGGING_FACE_HUB_TOKEN: ${HUGGING_FACE_HUB_TOKEN:-}
+    ports:
+      - '8000:8000'
+    volumes:
+      - huggingface-cache:/root/.cache/huggingface
+    gpus: all
+    ipc: host
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: learning-agent-app
+    depends_on:
+      - vllm
+    environment:
+      PORT: 3000
+      VLLM_BASE_URL: http://vllm:8000/v1
+      MODEL_NAME: Qwen/Qwen2.5-7B-Instruct-AWQ
+      OPENAI_API_KEY: local
+    ports:
+      - '3000:3000'
+
+volumes:
+  huggingface-cache:

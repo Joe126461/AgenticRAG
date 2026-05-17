@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+openai
+pyyaml
+python-frontmatter
+mcp
+httpx
+beautifulsoup4
+ruff

@@ -1,0 +1,21 @@
+version: 1
+mcp_servers:
+  - id: web-search
+    name: Web Search Server
+    config_path: ./mcp/web-search/server.json
+    transport: stdio
+    purpose: "提供联网搜索能力，返回标题、链接和摘要。"
+    capabilities:
+      tools: true
+      resources: false
+      resource_templates: false
+      prompts: false
+    discovery:
+      read_priority:
+        - tools
+    use_when:
+      - "问题依赖最新公开信息"
+      - "本地模板里没有直接答案"
+    fallback:
+      - "answer from local context only"
+    trust_level: medium

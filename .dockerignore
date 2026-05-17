@@ -1,0 +1,8 @@
+node_modules
+npm-debug.log*
+.git
+.env
+agent-tools
+__pycache__
+.venv
+.ruff_cache
